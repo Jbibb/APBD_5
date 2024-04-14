@@ -8,7 +8,7 @@ public interface IMockDatabase
     public Animal? RemoveAnimal(int id);
 
     public ICollection<Appointment> GetAppointmentsRelatedToAnimal(int id);
-    public bool AddAppointment(string date, int id, string description, int price);
+    public bool AddAppointment(Appointment appointment);
 }
 
 public class MockDatabase : IMockDatabase
@@ -90,22 +90,9 @@ public class MockDatabase : IMockDatabase
         return result;
     }
 
-    public bool AddAppointment(string date, int id, string description, int price)
+    public bool AddAppointment(Appointment appointment)
     {
-        var targetAnimal = _animals.FirstOrDefault(a => a.Id == id);
-        if (targetAnimal is null)
-        {
-            return false;
-        }
-        
-        _appointments.Add(new Appointment()
-            {
-                Date = DateTime.Parse(date),
-                Animal = targetAnimal,
-                Description = description,
-                Price = price
-            }
-        );
+        _appointments.Add(appointment);
         return true;
     }
 }

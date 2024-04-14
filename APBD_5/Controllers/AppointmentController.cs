@@ -25,4 +25,11 @@ public class AppointmentController : ControllerBase
 
         return Ok(appointments);
     }
+
+    [HttpPost]
+    public IActionResult Add(Appointment appointment)
+    {
+        _mockDatabase.AddAppointment(appointment);
+        return Created($"$appointments/{appointment.Id}", appointment);
+    }
 }
